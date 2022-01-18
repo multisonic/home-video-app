@@ -5,13 +5,25 @@ import "./VideoPlayer.css";
 
 export default function VideoPlayer({ urlObject, setUrlObject }) {
   const [url, setUrl] = useState(urlObject.primary);
+  const [version, setVersion] = useState("Primary");
   const [playing, setPlaying] = useState(true);
   const [fullScreen, setFullScreen] = useState(false);
+
+  function toggleBackup() {
+    if (version === "Primary") {
+      setUrl(urlObject.backup);
+      setVersion("Backup");
+    } else {
+      setUrl(urlObject.primary);
+      setVersion("Primary");
+    }
+  }
 
   return (
     <>
       <div className="darkmode-ignore player-wrapper">
         <ReactPlayer
+          controls
           url={url}
           playing={playing}
           className="react-player"
@@ -22,18 +34,11 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
       <div className="mb-3 d-flex flex-column align-items-center">
         <div className="mt-1">
           <Button
+            variant={playing ? "outline-primary" : "primary"}
             className="me-2"
-            disabled={playing ? true : false}
-            onClick={() => setPlaying(true)}
+            onClick={() => setPlaying(!playing)}
           >
-            Play
-          </Button>
-          <Button
-            className="me-2"
-            disabled={playing ? false : true}
-            onClick={() => setPlaying(false)}
-          >
-            Pause
+            {playing ? "Pause" : "Play"}
           </Button>
           <Button variant="outline-secondary">Full Screen</Button>
         </div>
@@ -42,9 +47,9 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
             <Button
               className="me-2 btn-sm"
               variant="outline-primary"
-              onClick={() => setUrl(urlObject.backup)}
+              onClick={toggleBackup}
             >
-              Backup Video
+              Switch to {version === "Primary" ? "Backup" : "Primary"} Video
             </Button>
           )}
           <Button
