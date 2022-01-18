@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Button, Container, Stack } from "react-bootstrap";
+import VideoListCard from "./components/VideoListCard";
+import VideoPlayer from "./components/VideoPlayer";
+import Darkmode from "darkmode-js";
 
 function App() {
+  new Darkmode().showWidget();
+  const [urlObject, setUrlObject] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container className="my-2">
+      <Stack direction="horizontal" gap="2" className="mb-3">
+        <div className="fs-5 me-auto">Home Video App</div>
+        <Button>Test</Button>
+      </Stack>
+      {urlObject && (
+        <VideoPlayer urlObject={urlObject} setUrlObject={setUrlObject} />
+      )}
+      <VideoListCard setUrlObject={setUrlObject} />
+    </Container>
   );
 }
 
