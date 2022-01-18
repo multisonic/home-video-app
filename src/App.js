@@ -14,7 +14,7 @@ function App() {
   }
 
   return (
-    <Container className="my-2">
+    <Container className="my-2 d-flex flex-column">
       <Stack direction="horizontal" gap="2" className="mb-3">
         <div className="fs-5 me-auto">Home Video App</div>
         <Button>Test</Button>
