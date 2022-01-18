@@ -12,8 +12,8 @@ export default function VideoListCard({ handleOpenVideo }) {
             style={{ cursor: "pointer" }}
             onClick={() =>
               handleOpenVideo({
-                primary: "https://vimeo.com/566374660",
-                backup: "https://www.youtube.com/watch?v=_wL7Y_9iLyI",
+                primary: "https://vimeo.com/566374660#t=3m43s",
+                backup: "https://www.youtube.com/watch?v=_wL7Y_9iLyI?t=223",
               })
             }
           >
@@ -23,7 +23,7 @@ export default function VideoListCard({ handleOpenVideo }) {
             style={{ cursor: "pointer" }}
             onClick={() =>
               handleOpenVideo({
-                primary: "https://www.youtube.com/watch?v=Qzvg9KuvRiw",
+                primary: "https://youtu.be/Qzvg9KuvRiw?t=109",
               })
             }
           >
@@ -33,7 +33,7 @@ export default function VideoListCard({ handleOpenVideo }) {
             style={{ cursor: "pointer" }}
             onClick={() =>
               handleOpenVideo({
-                primary: "https://vimeo.com/417445463",
+                primary: "https://vimeo.com/417445463#t=2m03s",
                 backup: "https://youtu.be/g4GmKYrzM0w?t=123",
               })
             }
