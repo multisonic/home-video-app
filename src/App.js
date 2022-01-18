@@ -8,6 +8,11 @@ function App() {
   new Darkmode().showWidget();
   const [urlObject, setUrlObject] = useState(null);
 
+  function handleOpenVideo(object) {
+    setUrlObject(null);
+    setUrlObject(object);
+  }
+
   return (
     <Container className="my-2">
       <Stack direction="horizontal" gap="2" className="mb-3">
@@ -17,7 +22,7 @@ function App() {
       {urlObject && (
         <VideoPlayer urlObject={urlObject} setUrlObject={setUrlObject} />
       )}
-      <VideoListCard setUrlObject={setUrlObject} />
+      <VideoListCard handleOpenVideo={handleOpenVideo} />
     </Container>
   );
 }

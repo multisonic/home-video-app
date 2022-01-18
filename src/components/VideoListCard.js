@@ -1,6 +1,6 @@
 import { Card, Stack } from "react-bootstrap";
 
-export default function VideoListCard({ setUrlObject }) {
+export default function VideoListCard({ handleOpenVideo }) {
   return (
     <Card className="">
       <Card.Body>
@@ -11,7 +11,7 @@ export default function VideoListCard({ setUrlObject }) {
           <div
             style={{ cursor: "pointer" }}
             onClick={() =>
-              setUrlObject({
+              handleOpenVideo({
                 primary: "https://vimeo.com/566374660",
                 backup: "https://www.youtube.com/watch?v=_wL7Y_9iLyI",
               })
@@ -22,7 +22,7 @@ export default function VideoListCard({ setUrlObject }) {
           <div
             style={{ cursor: "pointer" }}
             onClick={() =>
-              setUrlObject({
+              handleOpenVideo({
                 primary: "https://www.youtube.com/watch?v=Qzvg9KuvRiw",
               })
             }
@@ -32,7 +32,7 @@ export default function VideoListCard({ setUrlObject }) {
           <div
             style={{ cursor: "pointer" }}
             onClick={() =>
-              setUrlObject({
+              handleOpenVideo({
                 primary: "https://vimeo.com/417445463",
                 backup: "https://youtu.be/g4GmKYrzM0w?t=123",
               })
@@ -43,7 +43,7 @@ export default function VideoListCard({ setUrlObject }) {
           <div
             style={{ cursor: "pointer" }}
             onClick={() =>
-              setUrlObject({
+              handleOpenVideo({
                 primary: "https://youtu.be/AGYne2pBWTY?t=784",
               })
             }
