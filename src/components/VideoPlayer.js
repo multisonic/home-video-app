@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "./VideoPlayer.css";
@@ -10,6 +10,11 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
   const [fullScreen, setFullScreen] = useState(false);
   const playerRef = useRef();
 
+  useEffect(() => {
+    setUrl(urlObject.primary);
+    playerRef.current.seekTo(urlObject.startTime, "seconds");
+  }, [urlObject]);
+
   function toggleBackup() {
     if (version === "Primary") {
       setUrl(urlObject.backup);
@@ -18,6 +23,7 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
       setUrl(urlObject.primary);
       setVersion("Primary");
     }
+    playerRef.current.seekTo(urlObject.startTime, "seconds");
   }
 
   function jumpToStart() {
