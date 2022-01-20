@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "./VideoPlayer.css";
@@ -8,6 +8,7 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
   const [version, setVersion] = useState("Primary");
   const [playing, setPlaying] = useState(true);
   const [fullScreen, setFullScreen] = useState(false);
+  const playerRef = useRef();
 
   function toggleBackup() {
     if (version === "Primary") {
@@ -19,10 +20,15 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
     }
   }
 
+  function jumpToStart() {
+    playerRef.current.seekTo(urlObject.startTime, "seconds");
+  }
+
   return (
     <>
       <div className="darkmode-ignore player-wrapper">
         <ReactPlayer
+          ref={playerRef}
           controls
           url={url}
           playing={playing}
@@ -40,7 +46,12 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
           >
             {playing ? "Pause" : "Play"}
           </Button>
-          <Button variant="outline-secondary">Full Screen</Button>
+          <Button variant="outline-secondary" className="me-2">
+            Full Screen
+          </Button>
+          <Button variant="outline-secondary" onClick={jumpToStart}>
+            Jump
+          </Button>
         </div>
         <div className="mt-1">
           {urlObject.backup && (
