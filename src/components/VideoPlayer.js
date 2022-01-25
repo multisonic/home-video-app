@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "./VideoPlayer.css";
 
@@ -12,7 +12,8 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
 
   useEffect(() => {
     setUrl(urlObject.primary);
-    playerRef.current.seekTo(urlObject.startTime, "seconds");
+    // playerRef.current.seekTo(urlObject.startTime, "seconds");
+    jumpToTime(urlObject.startTime);
   }, [urlObject]);
 
   function toggleBackup() {
@@ -23,11 +24,11 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
       setUrl(urlObject.primary);
       setVersion("Primary");
     }
-    playerRef.current.seekTo(urlObject.startTime, "seconds");
+    jumpToTime(urlObject.startTime);
   }
 
-  function jumpToStart() {
-    playerRef.current.seekTo(urlObject.startTime, "seconds");
+  function jumpToTime(timeInSeconds) {
+    playerRef.current.seekTo(timeInSeconds, "seconds");
   }
 
   return (
@@ -55,9 +56,9 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
           <Button variant="outline-secondary" className="me-2">
             Full Screen
           </Button>
-          <Button variant="outline-secondary" onClick={jumpToStart}>
+          {/* <Button variant="outline-secondary" onClick={jumpToStart}>
             Jump
-          </Button>
+          </Button> */}
         </div>
         <div className="mt-1">
           {urlObject.backup && (
