@@ -1,4 +1,4 @@
-const videoData = [
+let videos = [
   {
     id: "4bf88144-b49e-427d-9151-19eaf203d077",
     title: "Clifflix: Illuminations Reflections of Earth 2021",
@@ -27,4 +27,12 @@ const videoData = [
   },
 ];
 
-export default videoData;
+export function getVideos() {
+  return videos;
+}
+
+export function getVideo(id) {
+  return videos.find((video) => video.id === id);
+}
+
+// export default videoData;

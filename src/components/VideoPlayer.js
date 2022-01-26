@@ -70,13 +70,13 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
               Switch to {version === "Primary" ? "Backup" : "Primary"} Video
             </Button>
           )}
-          <Button
+          {/* <Button
             variant="outline-secondary"
             className="btn-sm"
             onClick={() => setUrlObject(null)}
           >
             Close Player
-          </Button>
+          </Button> */}
         </div>
       </div>
     </>
