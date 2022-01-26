@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import { getVideo } from "../VideoData";
@@ -9,7 +8,7 @@ export default function VideoPage() {
   return (
     <>
       <h1>Video Page</h1>
-      <VideoPlayer urlObject={video} />
+      <VideoPlayer video={video} />
       <h2>{video.title}</h2>
     </>
   );

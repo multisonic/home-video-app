@@ -1,26 +1,16 @@
-import Darkmode from "darkmode-js";
-import { useState } from "react";
 import { Button, Container, Stack } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import VideoListCard from "./components/VideoListCard";
-import VideoPlayer from "./components/VideoPlayer";
 import HomePage from "./pages/HomePage";
 import VideoPage from "./pages/VideoPage";
 
 function App() {
-  new Darkmode().showWidget();
-  const [urlObject, setUrlObject] = useState(null);
-
-  function handleOpenVideo(object) {
-    setUrlObject(null);
-    setUrlObject(object);
-  }
-
   return (
     <Container className="my-2 d-flex flex-column">
       <Stack direction="horizontal" gap="2" className="mb-3">
         <div className="fs-5 me-auto">
-          <a href="/">Home Video App</a>
+          <a href="/" className="text-decoration-none text-dark">
+            Home Video App
+          </a>
         </div>
         <Button>Test</Button>
       </Stack>
