@@ -3,28 +3,26 @@ import { Button } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "./VideoPlayer.css";
 
-export default function VideoPlayer({ urlObject, setUrlObject }) {
-  const [url, setUrl] = useState(urlObject.primary);
+export default function VideoPlayer({ video }) {
+  const [url, setUrl] = useState(video.primary);
   const [version, setVersion] = useState("Primary");
   const [playing, setPlaying] = useState(true);
   const [fullScreen, setFullScreen] = useState(false);
   const playerRef = useRef();
 
   useEffect(() => {
-    setUrl(urlObject.primary);
-    // playerRef.current.seekTo(urlObject.startTime, "seconds");
-    jumpToTime(urlObject.startTime);
-  }, [urlObject]);
+    jumpToTime(video.startTime);
+  }, [url]);
 
   function toggleBackup() {
     if (version === "Primary") {
-      setUrl(urlObject.backup);
+      setUrl(video.backup);
       setVersion("Backup");
     } else {
-      setUrl(urlObject.primary);
+      setUrl(video.primary);
       setVersion("Primary");
     }
-    jumpToTime(urlObject.startTime);
+    // jumpToTime(video.startTime);
   }
 
   function jumpToTime(timeInSeconds) {
@@ -46,7 +44,7 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
       </div>
       <div className="mb-3 d-flex flex-column align-items-center">
         <div className="mt-1">
-          <Button
+          {/* <Button
             variant={playing ? "outline-primary" : "primary"}
             className="me-2"
             onClick={() => setPlaying(!playing)}
@@ -55,13 +53,13 @@ export default function VideoPlayer({ urlObject, setUrlObject }) {
           </Button>
           <Button variant="outline-secondary" className="me-2">
             Full Screen
-          </Button>
+          </Button> */}
           {/* <Button variant="outline-secondary" onClick={jumpToStart}>
             Jump
           </Button> */}
         </div>
         <div className="mt-1">
-          {urlObject.backup && (
+          {video.backup && (
             <Button
               className="me-2 btn-sm"
               variant="outline-primary"
