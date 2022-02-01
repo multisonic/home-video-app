@@ -36,7 +36,7 @@ let videos = [
   {
     id: "b97bcd59-836f-4542-8291-aa59887a9cf1",
     title: "Eddie Films: Fantasmic 2020",
-    primary: "https://www.youtube.com/watch?v=gkU6vL4oAFE",
+    primary: "https://youtu.be/gkU6vL4oAFE",
     startTime: 0,
     slug: "eddie-fantasmic-2020",
     description: "",
