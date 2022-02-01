@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -14,9 +15,24 @@ import { getVideoBySlug } from "../VideoData";
 export default function VideoPage() {
   let params = useParams();
   let video = getVideoBySlug(params.slug);
+  const [url, setUrl] = useState(video.primary);
+  const [version, setVersion] = useState("Primary");
+  const [time, setTime] = useState(video.startTime);
+
+  function toggleBackup() {
+    if (version === "Primary") {
+      setUrl(video.backup);
+      setVersion("Backup");
+    } else {
+      setUrl(video.primary);
+      setVersion("Primary");
+    }
+    // jumpToTime(video.startTime);
+  }
+
   return (
     <>
-      <VideoPlayer video={video} />
+      <VideoPlayer url={url} time={time} />
       <h1>{video.title}</h1>
       <hr />
       <Container>
@@ -49,8 +65,13 @@ export default function VideoPage() {
             </Card>
             <div className="d-grid gap-2">
               {video.backup && (
-                <Button size="sm" className="mt-2" variant="outline-primary">
-                  Switch to Backup Video
+                <Button
+                  onClick={toggleBackup}
+                  size="sm"
+                  className="mt-2"
+                  variant="outline-primary"
+                >
+                  Switch to {version === "Primary" ? "Backup" : "Primary"} Video
                 </Button>
               )}
             </div>
