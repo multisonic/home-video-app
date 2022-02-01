@@ -30,13 +30,6 @@ export default function VideoPage() {
             </p>
           </Col>
           <Col>
-            <div className="d-grid gap-2">
-              {video.backup && (
-                <Button size="sm" className="mb-2" variant="outline-primary">
-                  Switch to Backup Video
-                </Button>
-              )}
-            </div>
             <Card>
               <Card.Body>
                 <Card.Title>Chapters</Card.Title>
@@ -54,6 +47,13 @@ export default function VideoPage() {
                 </Table>
               </Card.Body>
             </Card>
+            <div className="d-grid gap-2">
+              {video.backup && (
+                <Button size="sm" className="mt-2" variant="outline-primary">
+                  Switch to Backup Video
+                </Button>
+              )}
+            </div>
           </Col>
         </Row>
       </Container>
