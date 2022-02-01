@@ -14,27 +14,10 @@ export default function VideoListCard({ handleOpenVideo }) {
           <ul>
             {videos.map((video) => (
               <li>
-                <Link to={`/videos/${video.id}`}>{video.title}</Link>
+                <Link to={`/videos/${video.slug}`}>{video.title}</Link>
               </li>
             ))}
           </ul>
-          {/* <ul>
-            {videoData.map((video) => (
-              <li
-                key={video.title}
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  handleOpenVideo({
-                    primary: video.primary,
-                    backup: video?.backup,
-                    startTime: video.startTime,
-                  })
-                }
-              >
-                {video.title}
-              </li>
-            ))}
-          </ul> */}
         </Stack>
       </Card.Body>
     </Card>

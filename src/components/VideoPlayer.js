@@ -7,7 +7,6 @@ export default function VideoPlayer({ video }) {
   const [url, setUrl] = useState(video.primary);
   const [version, setVersion] = useState("Primary");
   const [playing, setPlaying] = useState(true);
-  const [fullScreen, setFullScreen] = useState(false);
   const playerRef = useRef();
 
   useEffect(() => {

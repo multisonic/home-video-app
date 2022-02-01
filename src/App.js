@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/videos/" element={<VideoPage />}>
-            <Route path=":videoId" element={<VideoPage />} />
+            <Route path=":slug" element={<VideoPage />} />
           </Route>
           <Route
             path="*"
