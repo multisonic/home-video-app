@@ -11,10 +11,12 @@ import {
 import { useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import { getVideoBySlug } from "../VideoData";
+import { timeFormatter } from "../utils";
 
 export default function VideoPage() {
   let params = useParams();
   let video = getVideoBySlug(params.slug);
+  let chapters = video.chapters;
   const [url, setUrl] = useState(video.primary);
   const [version, setVersion] = useState("Primary");
   const [time, setTime] = useState(video.startTime);
@@ -46,23 +48,23 @@ export default function VideoPage() {
             </p>
           </Col>
           <Col>
-            <Card>
-              <Card.Body>
-                <Card.Title>Chapters</Card.Title>
-                <Table striped size="sm">
-                  <tbody>
-                    <tr>
-                      <td>0:34:00</td>
-                      <td>Chaos</td>
-                    </tr>
-                    <tr>
-                      <td>0:35:00</td>
-                      <td>Not Chaos</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Card.Body>
-            </Card>
+            {chapters && (
+              <Card>
+                <Card.Body>
+                  <Card.Title>Chapters</Card.Title>
+                  <Table striped size="sm">
+                    <tbody>
+                      {chapters.map((chapter) => (
+                        <tr onClick={() => setTime(chapter.time)}>
+                          <td>{timeFormatter(chapter.time)}</td>
+                          <td>{chapter.title}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Card.Body>
+              </Card>
+            )}
             <div className="d-grid gap-2">
               {video.backup && (
                 <Button

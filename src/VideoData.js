@@ -8,6 +8,18 @@ let videos = [
     slug: "clifflix-roe-2021",
     description:
       'This is my latest 2021 version of "Reflections of Earth". This is a 4k Multicam edit with a multichannel studio soundtrack and is a HUGE upgrade to my previous three older versions. \n\n YouTube compression is brutal on these shadows! (even in 4k)  So, you can download your own high-quality copy of this video now down below.As always, if you like what you see, give it a "thumbs up" and subscribe to the channel. This video was made for all RoE fans around the world so make sure to tell all your friends about it and spread the word. Here is a link for a high-quality video file for your collection. In many ways, this is a much higher quality video than what YouTube can show online.',
+    chapters: [
+      {
+        num: 1,
+        time: 233,
+        title: "Introduction",
+      },
+      {
+        num: 2,
+        time: 293,
+        title: "Act 1 - Chaos",
+      },
+    ],
   },
   {
     id: "a4102a1c-fba5-452f-b696-3381c7668970",
