@@ -50,6 +50,7 @@ export function getVideos() {
 export function getVideoById(id) {
   return videos.find((video) => video.id === id);
 }
+
 export function getVideoBySlug(slug) {
   return videos.find((video) => video.slug === slug);
 }
