@@ -19,6 +19,26 @@ let videos = [
         time: 293,
         title: "Act 1 - Chaos",
       },
+      {
+        num: 3,
+        time: 408,
+        title: "Act 2 - Order",
+      },
+      {
+        num: 4,
+        time: 559,
+        title: "Adventure",
+      },
+      {
+        num: 5,
+        time: 856,
+        title: "Act 3 - Meaning",
+      },
+      {
+        num: 6,
+        time: 1005,
+        title: "Exit Music",
+      },
     ],
   },
   {
@@ -51,7 +71,7 @@ let videos = [
     primary: "https://youtu.be/gkU6vL4oAFE",
     startTime: 0,
     slug: "eddie-fantasmic-2020",
-    description: "",
+    description: null,
   },
 ];
 
