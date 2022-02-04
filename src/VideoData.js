@@ -2,6 +2,8 @@ let videos = [
   {
     id: "4bf88144-b49e-427d-9151-19eaf203d077",
     title: "Clifflix: Illuminations Reflections of Earth 2021",
+    eventDate: "2021-09-01",
+    postDate: "2021-09-30",
     primary: "https://vimeo.com/566374660",
     backup: "https://www.youtube.com/watch?v=_wL7Y_9iLyI",
     startTime: 223,
@@ -44,9 +46,23 @@ let videos = [
   {
     id: "a4102a1c-fba5-452f-b696-3381c7668970",
     title: "Clifflix: Happily Ever After in 8k",
+    eventDate: "2021-09-01",
+    postDate: "2021-09-30",
     primary: "https://youtu.be/Qzvg9KuvRiw",
     startTime: 109,
     slug: "clifflix-hea-2022",
+    chapters: [
+      {
+        num: 1,
+        time: 0,
+        title: "Cliff Introduction",
+      },
+      {
+        num: 2,
+        time: 119,
+        title: "Happily Ever After",
+      },
+    ],
   },
   {
     id: "0022b17e-1ce0-4ea4-ba48-de48fc7ff507",
@@ -61,13 +77,34 @@ let videos = [
   {
     id: "0308979a-0c6c-49c8-a588-165b9c8f3f86",
     title: "Reflections of Earth with Peace on Earth Finale 2016",
+    eventDate: "2021-09-01",
+    postDate: "2021-09-30",
     primary: "https://youtu.be/AGYne2pBWTY",
     startTime: 784,
     slug: "roe-christmas-2016",
+    chapters: [
+      {
+        num: 1,
+        time: 0,
+        title: "Introduction",
+      },
+      {
+        num: 2,
+        time: 58,
+        title: "Illuminations: Reflections of Earth",
+      },
+      {
+        num: 3,
+        time: 784,
+        title: "Holiday Finale",
+      },
+    ],
   },
   {
     id: "b97bcd59-836f-4542-8291-aa59887a9cf1",
     title: "Eddie Films: Fantasmic 2020",
+    eventDate: "2021-09-01",
+    postDate: "2021-09-30",
     primary: "https://youtu.be/gkU6vL4oAFE",
     startTime: 0,
     slug: "eddie-fantasmic-2020",

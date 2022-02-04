@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import { getVideoBySlug } from "../VideoData";
 import { timeFormatter } from "../utils";
+import "./VideoPage.css";
 
 export default function VideoPage() {
   let params = useParams();
@@ -36,16 +37,35 @@ export default function VideoPage() {
     <>
       <VideoPlayer url={url} time={time} />
       <h1>{video.title}</h1>
-      <hr />
+      {/* <hr /> */}
       <Container>
         <Row>
           <Col xxl={9} xl={8} lg={8} md={7}>
-            <h2>Description</h2>
-            <p styles={{ whiteSpace: "pre-wrap" }}>
-              {video.description
-                ? video.description
-                : "This video has no description, so here is some LOREM TEXT. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit optio repellendus deserunt inventore, ratione temporibus voluptatem ullam repellat. Id, libero animi? Perspiciatis, nulla numquam. Aspernatur est alias esse iusto doloribus! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus, libero natus quae minima quidem veritatis impedit ullam nobis fugit reprehenderit. Corporis, ipsum? Pariatur debitis id repellat nisi expedita beatae qui."}
-            </p>
+            <div className="mb-3">
+              <h2 className="section-header px-1">Dates</h2>
+              <Stack direction="horizontal" gap="2">
+                <div className="border border-dark rounded px-2">
+                  Post Date: {video.postDate}
+                </div>
+                <div className="border border-dark rounded px-2">
+                  Event Date: {video.eventDate}
+                </div>
+              </Stack>
+            </div>
+            <div className="mb-3">
+              <h2 className="section-header px-1">Description</h2>
+              <p styles={{ whiteSpace: "pre-wrap" }}>
+                {video.description
+                  ? video.description
+                  : "This video has no description, so here is some LOREM TEXT. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit optio repellendus deserunt inventore, ratione temporibus voluptatem ullam repellat. Id, libero animi? Perspiciatis, nulla numquam. Aspernatur est alias esse iusto doloribus! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus, libero natus quae minima quidem veritatis impedit ullam nobis fugit reprehenderit. Corporis, ipsum? Pariatur debitis id repellat nisi expedita beatae qui."}
+              </p>
+            </div>
+            <div className="mb-3">
+              <h2 className="section-header px-1">People</h2>
+              <Stack direction="horizontal" gap="2">
+                <div className="border border-dark rounded px-2">Clifflix</div>
+              </Stack>
+            </div>
           </Col>
           <Col>
             {chapters && (

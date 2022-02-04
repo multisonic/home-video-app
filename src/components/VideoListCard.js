@@ -13,7 +13,7 @@ export default function VideoListCard({ handleOpenVideo }) {
         <Stack direction="vertical" gap="2">
           <ul>
             {videos.map((video) => (
-              <li>
+              <li key={video.id}>
                 <Link to={`/videos/${video.slug}`}>{video.title}</Link>
               </li>
             ))}
