@@ -4,10 +4,12 @@ import ReactPlayer from "react-player";
 import "./VideoPlayer.css";
 
 export default function VideoPlayer({ url, time }) {
+  const [playing, setPlaying] = useState(true);
   const playerRef = useRef();
 
   useEffect(() => {
     jumpToTime(time);
+    setPlaying(true);
   }, [url, time]);
 
   function jumpToTime(timeInSeconds) {
@@ -21,7 +23,7 @@ export default function VideoPlayer({ url, time }) {
           ref={playerRef}
           controls
           url={url}
-          playing={true}
+          playing={playing}
           className="react-player"
           height="100%"
           width="100%"
