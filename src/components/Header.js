@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { supabase } from "../supabaseClient";
 
 export default function Header() {
   return (
@@ -22,7 +23,9 @@ export default function Header() {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#pricing">Sign Out</Nav.Link>
+            <Nav.Link href="#" onClick={() => supabase.auth.signOut()}>
+              Sign Out
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
