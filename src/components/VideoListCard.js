@@ -1,9 +1,10 @@
 import { Card, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getVideos } from "../VideoData";
+import { getVideos, getVideosByType } from "../VideoData";
 
 export default function VideoListCard({ handleOpenVideo }) {
   let videos = getVideos();
+  // let videos = getVideosByType("home-video");
   return (
     <Card className="">
       <Card.Body>
