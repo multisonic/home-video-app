@@ -1,7 +1,10 @@
 import { Card, Stack } from "react-bootstrap";
-import videoData from "../VideoData";
+import { Link } from "react-router-dom";
+import { getVideos, getVideosByType } from "../VideoData";
 
 export default function VideoListCard({ handleOpenVideo }) {
+  let videos = getVideos();
+  // let videos = getVideosByType("home-video");
   return (
     <Card className="">
       <Card.Body>
@@ -10,19 +13,9 @@ export default function VideoListCard({ handleOpenVideo }) {
         </Card.Title>
         <Stack direction="vertical" gap="2">
           <ul>
-            {videoData.map((video) => (
-              <li
-                key={video.title}
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  handleOpenVideo({
-                    primary: video.primary,
-                    backup: video?.backup,
-                    startTime: video.startTime,
-                  })
-                }
-              >
-                {video.title}
+            {videos.map((video) => (
+              <li key={video.id}>
+                <Link to={`/videos/${video.slug}`}>{video.title}</Link>
               </li>
             ))}
           </ul>
