@@ -66,6 +66,18 @@ export default function VideoPage() {
                 <div className="border border-dark rounded px-2">Clifflix</div>
               </Stack>
             </div>
+            <div className="mb-3">
+              <h2 className="section-header px-1">Places</h2>
+              <Stack direction="horizontal" gap="2">
+                <div className="border border-dark rounded px-2">
+                  Walt Disney World
+                </div>
+                <div className="border border-dark rounded px-2">Florida</div>
+                <div className="border border-dark rounded px-2">
+                  United States
+                </div>
+              </Stack>
+            </div>
           </Col>
           <Col>
             {chapters && (
