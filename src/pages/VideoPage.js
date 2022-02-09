@@ -8,7 +8,7 @@ import {
   Stack,
   Table,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import { fetchVideoBySlug } from "../supabaseClient";
 import { timeFormatter } from "../utils";
@@ -19,7 +19,7 @@ export default function VideoPage() {
   const [video, setVideo] = useState([]);
   const [url, setUrl] = useState(null);
   const [version, setVersion] = useState("Primary");
-  const [time, setTime] = useState(null);
+  const [time, setTime] = useState(0);
   const [loading, setLoading] = useState(true);
   const [chapters, setChapters] = useState([]);
 
@@ -36,6 +36,7 @@ export default function VideoPage() {
   useEffect(() => {
     setLoading(true);
     getVideo(params.slug);
+    console.log(video);
     setLoading(false);
   }, []);
 
@@ -139,6 +140,13 @@ export default function VideoPage() {
                   Force Video Load
                 </Button>
               )}
+            </div>
+            <div className="d-grid gap-2">
+              <Link to={`/videos/${params.slug}/edit`}>
+                <Button size="sm" className="mt-2" variant="outline-danger">
+                  Edit Video Data
+                </Button>
+              </Link>
             </div>
           </Col>
         </Row>
