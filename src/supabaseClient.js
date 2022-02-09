@@ -12,6 +12,16 @@ export const fetchVideos = async () => {
   else return videos;
 };
 
+export const fetchVideosByType = async (type) => {
+  let { data: videos, error } = await supabase
+    .from("videos")
+    .select("*")
+    .eq("type", type);
+
+  if (error) console.log("error", error);
+  else return videos;
+};
+
 export const fetchVideoBySlug = async (slug) => {
   let { data: video, error } = await supabase
     .from("videos")
