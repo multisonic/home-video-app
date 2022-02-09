@@ -19,7 +19,7 @@ export default function VideoPage() {
   const [video, setVideo] = useState([]);
   const [url, setUrl] = useState(null);
   const [version, setVersion] = useState("Primary");
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(null);
   const [loading, setLoading] = useState(true);
   const [chapters, setChapters] = useState([]);
 
@@ -28,12 +28,8 @@ export default function VideoPage() {
     let videoData = await fetchVideoBySlug(slug);
     setVideo(videoData);
     setChapters(videoData.chapters);
-    setUrl(video.url_primary);
-    setTime(video.start_time);
-    console.log("videoData", video);
-    console.log("primary_url", url);
-    console.log("chapters", chapters);
-    console.log("start time", time);
+    setUrl(videoData.url_primary);
+    setTime(videoData.start_time);
     setLoading(false);
   }
 
@@ -58,7 +54,7 @@ export default function VideoPage() {
 
   return (
     <>
-      <VideoPlayer url={url} time={time} />
+      {url && <VideoPlayer url={url} time={time} />}
       <h1>{video.title}</h1>
       {/* <hr /> */}
       <Container>
