@@ -1,23 +1,33 @@
 import { useEffect, useState } from "react";
 import { Card, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { supabase } from "../supabaseClient";
+import { fetchVideos, supabase } from "../supabaseClient";
 import { getVideos, getVideosByType } from "../VideoData";
 
 export default function VideoListCard({ handleOpenVideo }) {
   const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function getVideos() {
+    let videoData = await fetchVideos();
+    setVideos(videoData);
+    setLoading(false);
+  }
 
   useEffect(() => {
-    fetchVideos().catch(console.error);
+    setLoading(true);
+    getVideos();
+    setLoading(false);
   }, []);
 
-  const fetchVideos = async () => {
-    let { data, error } = await supabase.from("videos").select("*");
-    console.log(data);
-    if (error) console.log("error", error);
-    else setVideos(data);
-  };
+  // const fetchVideos = async () => {
+  //   let { data, error } = await supabase.from("videos").select("*");
+
+  //   if (error) console.log("error", error);
+  //   else setVideos(data);
+  // };
   // let videos = getVideosByType("home-video");
+  if (loading) return "Loading...";
   return (
     <Card className="">
       <Card.Body>

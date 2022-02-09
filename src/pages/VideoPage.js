@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -10,28 +10,51 @@ import {
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
-import { getVideoBySlug } from "../VideoData";
+import { fetchVideoBySlug } from "../supabaseClient";
 import { timeFormatter } from "../utils";
 import "./VideoPage.css";
 
 export default function VideoPage() {
   let params = useParams();
-  let video = getVideoBySlug(params.slug);
-  let chapters = video.chapters;
-  const [url, setUrl] = useState(video.primary);
+  const [video, setVideo] = useState([]);
+  const [url, setUrl] = useState(null);
   const [version, setVersion] = useState("Primary");
-  const [time, setTime] = useState(video.startTime);
+  const [time, setTime] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [chapters, setChapters] = useState([]);
+
+  async function getVideo(slug) {
+    setLoading(true);
+    let videoData = await fetchVideoBySlug(slug);
+    setVideo(videoData);
+    setChapters(videoData.chapters);
+    setUrl(video.url_primary);
+    setTime(video.start_time);
+    console.log("videoData", video);
+    console.log("primary_url", url);
+    console.log("chapters", chapters);
+    console.log("start time", time);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    getVideo(params.slug);
+    setLoading(false);
+  }, []);
 
   function toggleBackup() {
     if (version === "Primary") {
-      setUrl(video.backup);
+      setUrl(video.url_backup);
       setVersion("Backup");
     } else {
-      setUrl(video.primary);
+      setUrl(video.url_primary);
       setVersion("Primary");
     }
     // jumpToTime(video.startTime);
   }
+
+  if (loading) return "Loading...";
 
   return (
     <>
@@ -45,10 +68,10 @@ export default function VideoPage() {
               <h2 className="section-header px-1">Dates</h2>
               <Stack direction="horizontal" gap="2">
                 <div className="border border-dark rounded px-2">
-                  Post Date: {video.postDate}
+                  Post Date: {video.date_post}
                 </div>
                 <div className="border border-dark rounded px-2">
-                  Event Date: {video.eventDate}
+                  Event Date: {video.date_event}
                 </div>
               </Stack>
             </div>
@@ -80,7 +103,7 @@ export default function VideoPage() {
             </div>
           </Col>
           <Col>
-            {chapters && (
+            {video.chapters && (
               <Card>
                 <Card.Body>
                   <Card.Title>Chapters</Card.Title>
@@ -98,7 +121,7 @@ export default function VideoPage() {
               </Card>
             )}
             <div className="d-grid gap-2">
-              {video.backup && (
+              {video.url_backup && (
                 <Button
                   onClick={toggleBackup}
                   size="sm"
@@ -106,6 +129,18 @@ export default function VideoPage() {
                   variant="outline-primary"
                 >
                   Switch to {version === "Primary" ? "Backup" : "Primary"} Video
+                </Button>
+              )}
+            </div>
+            <div className="d-grid gap-2">
+              {video && (
+                <Button
+                  onClick={() => setUrl(video.url_primary)}
+                  size="sm"
+                  className="mt-2"
+                  variant="danger"
+                >
+                  Force Video Load
                 </Button>
               )}
             </div>
