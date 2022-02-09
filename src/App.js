@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Account from "./components/Account";
 import Auth from "./components/Auth";
 import Header from "./components/Header";
+import EditVideoPage from "./pages/EditVideoPage";
 import HomePage from "./pages/HomePage";
 import VideoPage from "./pages/VideoPage";
 import { supabase } from "./supabaseClient";
@@ -30,8 +31,9 @@ function App() {
             <Router>
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/videos/" element={<VideoPage />}>
+                <Route path="videos">
                   <Route path=":slug" element={<VideoPage />} />
+                  <Route path=":slug/edit" element={<EditVideoPage />} />
                 </Route>
                 <Route
                   path="/account"
