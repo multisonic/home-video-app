@@ -1,10 +1,26 @@
+import { useEffect, useState } from "react";
 import { Card, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getVideos, getVideosByType } from "../VideoData";
+import { fetchVideos, fetchVideosByType } from "../supabaseClient";
+// import { getVideos, getVideosByType } from "../VideoData";
 
-export default function VideoListCard({ handleOpenVideo }) {
-  let videos = getVideos();
-  // let videos = getVideosByType("home-video");
+export default function VideoListCard({ type }) {
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function getVideos(type) {
+    let videoData = await fetchVideos();
+    setVideos(videoData);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    getVideos();
+    setLoading(false);
+  }, []);
+
+  if (loading) return "Loading...";
   return (
     <Card className="">
       <Card.Body>
@@ -15,7 +31,8 @@ export default function VideoListCard({ handleOpenVideo }) {
           <ul>
             {videos.map((video) => (
               <li key={video.id}>
-                <Link to={`/videos/${video.slug}`}>{video.title}</Link>
+                <Link to={`/videos/${video.slug}`}>{video.title}</Link> (
+                <Link to={`/videos/${video.slug}/edit`}>Edit</Link>)
               </li>
             ))}
           </ul>

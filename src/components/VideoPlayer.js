@@ -8,7 +8,9 @@ export default function VideoPlayer({ url, time }) {
   const playerRef = useRef();
 
   useEffect(() => {
-    jumpToTime(time);
+    if (time > 0) {
+      jumpToTime(time);
+    }
     setPlaying(true);
   }, [url, time]);
 

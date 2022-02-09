@@ -4,22 +4,20 @@ import {
   Card,
   Col,
   Container,
+  Form,
   Row,
   Stack,
   Table,
 } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import { fetchVideoBySlug } from "../supabaseClient";
 import { timeFormatter } from "../utils";
 import "./VideoPage.css";
 
-export default function VideoPage() {
+export default function EditVideoPage() {
   let params = useParams();
   const [video, setVideo] = useState([]);
-  const [url, setUrl] = useState(null);
-  const [version, setVersion] = useState("Primary");
-  const [time, setTime] = useState(0);
   const [loading, setLoading] = useState(true);
   const [chapters, setChapters] = useState([]);
 
@@ -28,36 +26,32 @@ export default function VideoPage() {
     let videoData = await fetchVideoBySlug(slug);
     setVideo(videoData);
     setChapters(videoData.chapters);
-    setUrl(videoData.url_primary);
-    setTime(videoData.start_time);
     setLoading(false);
   }
 
   useEffect(() => {
     setLoading(true);
     getVideo(params.slug);
-    console.log(video);
     setLoading(false);
   }, []);
-
-  function toggleBackup() {
-    if (version === "Primary") {
-      setUrl(video.url_backup);
-      setVersion("Backup");
-    } else {
-      setUrl(video.url_primary);
-      setVersion("Primary");
-    }
-    // jumpToTime(video.startTime);
-  }
 
   if (loading) return "Loading...";
 
   return (
     <>
-      {url && <VideoPlayer url={url} time={time} />}
-      <h1>{video.title}</h1>
+      {/* <VideoPlayer url={url} time={time} /> */}
+      <h1>EDIT {video.title}</h1>
       {/* <hr /> */}
+      <Form>
+        <Form.Group className="mb-3" controlId="videoEditForm.Title">
+          <Form.Label>Video Title</Form.Label>
+          <Form.Control type="text" value={video.title} />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="videoEditForm.Description">
+          <Form.Label>Video Description</Form.Label>
+          <Form.Control as="textarea" rows={9} value={video.description} />
+        </Form.Group>
+      </Form>
       <Container>
         <Row>
           <Col xxl={9} xl={8} lg={8} md={7}>
@@ -97,56 +91,6 @@ export default function VideoPage() {
                   United States
                 </div>
               </Stack>
-            </div>
-          </Col>
-          <Col>
-            {video.chapters && (
-              <Card>
-                <Card.Body>
-                  <Card.Title>Chapters</Card.Title>
-                  <Table striped size="sm">
-                    <tbody>
-                      {chapters.map((chapter) => (
-                        <tr onClick={() => setTime(chapter.time)}>
-                          <td>{timeFormatter(chapter.time)}</td>
-                          <td>{chapter.title}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Card.Body>
-              </Card>
-            )}
-            <div className="d-grid gap-2">
-              {video.url_backup && (
-                <Button
-                  onClick={toggleBackup}
-                  size="sm"
-                  className="mt-2"
-                  variant="outline-primary"
-                >
-                  Switch to {version === "Primary" ? "Backup" : "Primary"} Video
-                </Button>
-              )}
-            </div>
-            <div className="d-grid gap-2">
-              {video && (
-                <Button
-                  onClick={() => setUrl(video.url_primary)}
-                  size="sm"
-                  className="mt-2"
-                  variant="danger"
-                >
-                  Force Video Load
-                </Button>
-              )}
-            </div>
-            <div className="d-grid gap-2">
-              <Link to={`/videos/${params.slug}/edit`}>
-                <Button size="sm" className="mt-2" variant="outline-danger">
-                  Edit Video Data
-                </Button>
-              </Link>
             </div>
           </Col>
         </Row>
