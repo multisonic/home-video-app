@@ -1,3 +1,4 @@
+import { createBrowserHistory } from "history";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -8,7 +9,7 @@ import {
   Stack,
   Table,
 } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import { fetchVideoBySlug } from "../supabaseClient";
 import { timeFormatter } from "../utils";
@@ -16,6 +17,7 @@ import "./VideoPage.css";
 
 export default function VideoPage() {
   let params = useParams();
+  let navigate = useNavigate();
   const [video, setVideo] = useState([]);
   const [url, setUrl] = useState(null);
   const [version, setVersion] = useState("Primary");
@@ -26,17 +28,21 @@ export default function VideoPage() {
   async function getVideo(slug) {
     setLoading(true);
     let videoData = await fetchVideoBySlug(slug);
-    setVideo(videoData);
-    setChapters(videoData.chapters);
-    setUrl(videoData.url_primary);
-    setTime(videoData.start_time);
-    setLoading(false);
+    await setVideo(videoData);
+    await setChapters(videoData.chapters);
+    await setUrl(videoData.url_primary);
+    await setTime(videoData.start_time);
+    await setLoading(false);
+    document.title = `${videoData.title} | The Home Video App`;
+  }
+
+  function goToEditPage() {
+    navigate(`/videos/${params.slug}/edit`);
   }
 
   useEffect(() => {
     setLoading(true);
     getVideo(params.slug);
-    console.log(video);
     setLoading(false);
   }, []);
 
@@ -100,7 +106,10 @@ export default function VideoPage() {
             </div>
           </Col>
           <Col>
-            {video.chapters && (
+            {chapters && (
+              <VideoChapters chapters={chapters} setTime={setTime} />
+            )}
+            {/* {chapters && (
               <Card>
                 <Card.Body>
                   <Card.Title>Chapters</Card.Title>
@@ -116,7 +125,7 @@ export default function VideoPage() {
                   </Table>
                 </Card.Body>
               </Card>
-            )}
+            )} */}
             <div className="d-grid gap-2">
               {video.url_backup && (
                 <Button
@@ -142,11 +151,14 @@ export default function VideoPage() {
               )}
             </div>
             <div className="d-grid gap-2">
-              <Link to={`/videos/${params.slug}/edit`}>
-                <Button size="sm" className="mt-2" variant="outline-danger">
-                  Edit Video Data
-                </Button>
-              </Link>
+              <Button
+                size="sm"
+                className="mt-2"
+                variant="outline-danger"
+                onClick={() => goToEditPage()}
+              >
+                Edit Video Data
+              </Button>
             </div>
           </Col>
         </Row>
@@ -155,6 +167,31 @@ export default function VideoPage() {
   );
 }
 
-export function VideoChapters({ chapters }) {
-  return <div></div>;
+export function VideoChapters({ setTime, chapters }) {
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>Chapters</Card.Title>
+        <Table striped hover size="sm">
+          <tbody>
+            {chapters.map((chapter) => (
+              <VideoChapterRow chapter={chapter} setTime={setTime} />
+            ))}
+          </tbody>
+        </Table>
+      </Card.Body>
+    </Card>
+  );
+}
+
+export function VideoChapterRow({ chapter, setTime }) {
+  const styles = {
+    cursor: "pointer",
+  };
+  return (
+    <tr onClick={() => setTime(chapter.time)} style={styles}>
+      <td>{timeFormatter(chapter.time)}</td>
+      <td>{chapter.title}</td>
+    </tr>
+  );
 }
