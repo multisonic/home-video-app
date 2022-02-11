@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   Button,
   Card,
@@ -20,6 +21,14 @@ export default function EditVideoPage() {
   const [video, setVideo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [chapters, setChapters] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+  console.log(watch("title"));
 
   async function getVideo(slug) {
     setLoading(true);
@@ -42,16 +51,32 @@ export default function EditVideoPage() {
       {/* <VideoPlayer url={url} time={time} /> */}
       <h1>EDIT {video.title}</h1>
       {/* <hr /> */}
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="videoEditForm.Title">
           <Form.Label>Video Title</Form.Label>
-          <Form.Control type="text" value={video.title} />
+          <Form.Control
+            {...register("title")}
+            type="text"
+            value={video.title}
+          />
         </Form.Group>
+        <Row className="mb-3">
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>Primary URL</Form.Label>
+            <Form.Control type="text" value={video.url_primary} />
+          </Form.Group>
+          <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Label>Backup URL</Form.Label>
+            <Form.Control type="text" value={video.url_backup} />
+          </Form.Group>
+        </Row>
         <Form.Group className="mb-3" controlId="videoEditForm.Description">
           <Form.Label>Video Description</Form.Label>
           <Form.Control as="textarea" rows={9} value={video.description} />
         </Form.Group>
+        <Button type="submit">Submit</Button>
       </Form>
+      <hr className="my-5" />
       <Container>
         <Row>
           <Col xxl={9} xl={8} lg={8} md={7}>
