@@ -7,10 +7,20 @@ import Header from "./components/Header";
 import EditVideoPage from "./pages/EditVideoPage";
 import HomePage from "./pages/HomePage";
 import VideoPage from "./pages/VideoPage";
-import { supabase } from "./supabaseClient";
+import { fetchVideos, supabase } from "./supabaseClient";
+import { useVideoStore } from "./appStore";
 
 function App() {
+  const useVideos = () => useVideoStore((state) => state.setVideos);
   const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function addFromVideos(type) {
+    let videoData = await fetchVideos();
+    // setVideos(videoData);
+    useVideos(videoData);
+    setLoading(false);
+  }
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -19,6 +29,12 @@ function App() {
       setSession(session);
     });
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    getVideos();
+    setLoading(false);
+  }, [session]);
 
   return (
     <div className="container" style={{ padding: "50px 0 100px 0" }}>

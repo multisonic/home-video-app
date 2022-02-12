@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
 import { Card, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useVideoStore } from "../appStore";
 import { fetchVideos, fetchVideosByType } from "../supabaseClient";
-// import { getVideos, getVideosByType } from "../VideoData";
 
 export default function VideoListCard({ type }) {
-  const [videos, setVideos] = useState([]);
+  // const [videos, setVideos] = useState([]);
+  const videos = useVideoStore((state) => state.videos);
   const [loading, setLoading] = useState(true);
+  console.log("VideoListCard", videos);
+  // async function getVideos(type) {
+  //   let videoData = await fetchVideos();
+  //   setVideos(videoData);
+  //   setLoading(false);
+  // }
 
-  async function getVideos(type) {
-    let videoData = await fetchVideos();
-    setVideos(videoData);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    getVideos();
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getVideos();
+  //   setLoading(false);
+  // }, []);
 
   if (loading) return "Loading...";
   return (
