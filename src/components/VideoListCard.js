@@ -1,26 +1,17 @@
-import { useEffect, useState } from "react";
 import { Card, Stack } from "react-bootstrap";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { fetchVideos, fetchVideosByType } from "../supabaseClient";
-// import { getVideos, getVideosByType } from "../VideoData";
+import { fetchVideos } from "../supabaseClient";
 
 export default function VideoListCard({ type }) {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    isLoading,
+    error,
+    data: videos,
+  } = useQuery("videoList", () => fetchVideos());
 
-  async function getVideos(type) {
-    let videoData = await fetchVideos();
-    setVideos(videoData);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    getVideos();
-    setLoading(false);
-  }, []);
-
-  if (loading) return "Loading...";
+  if (isLoading) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
   return (
     <Card className="">
       <Card.Body>
