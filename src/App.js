@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Account from "./components/Account";
@@ -11,7 +10,12 @@ import HomePage from "./pages/HomePage";
 import VideoPage from "./pages/VideoPage";
 import { supabase } from "./supabaseClient";
 
-const queryClient = new QueryClient();
+// const getSession = async () => {
+//   const sessionStatus = supabase.auth.onAuthStateChange((_event, session) => {
+//     // return session;
+//   });
+//   return sessionStatus;
+// };
 
 function App() {
   const [session, setSession] = useState(null);
@@ -22,10 +26,13 @@ function App() {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-  }, []);
+  }, [session]);
+
+  // const { data: session, status } = useQuery("login", getSession);
+  console.log(session);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <div className="container" style={{ padding: "50px 0 100px 0" }}>
         {!session ? (
           <Auth />
@@ -65,7 +72,7 @@ function App() {
         )}
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </>
   );
 }
 
