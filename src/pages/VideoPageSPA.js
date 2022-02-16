@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -9,36 +9,43 @@ import {
   Table,
 } from "react-bootstrap";
 import VideoPlayer from "../components/VideoPlayer";
+import useVideo from "../hooks/useVideo";
 import { timeFormatter } from "../utils";
 import "./VideoPage.css";
-import useVideo from "../hooks/useVideo";
 
 export default function VideoPage({ videoId, setVideoId }) {
   const { status, data: video, error, isFetching } = useVideo(videoId);
   console.log(video);
   // const [video, setVideo] = useState([]);
-  // const [url, setUrl] = useState(video.url_primary);
-  // const [version, setVersion] = useState("Primary");
-  // const [time, setTime] = useState(video.time);
+  const [url, setUrl] = useState(null);
+  const [version, setVersion] = useState("Primary");
+  const [time, setTime] = useState(null);
   // const [chapters, setChapters] = useState([]);
 
-  // function toggleBackup() {
-  //   if (version === "Primary") {
-  //     setUrl(video.url_backup);
-  //     setVersion("Backup");
-  //   } else {
-  //     setUrl(video.url_primary);
-  //     setVersion("Primary");
-  //   }
-  //   // jumpToTime(video.startTime);
-  // }
+  function toggleBackup() {
+    if (version === "Primary") {
+      setUrl(video.url_backup);
+      setVersion("Backup");
+    } else {
+      setUrl(video.url_primary);
+      setVersion("Primary");
+    }
+    // jumpToTime(video.startTime);
+  }
+
+  useEffect(() => {
+    if (video) {
+      setTime(video.start_time);
+      setUrl(video.url_primary);
+    }
+  }, [video]);
 
   if (status === "loading") return "Loading...";
-  if (status === "error") return `Error: {error.message}`;
+  if (status === "error") return `Error: ${error.message}`;
 
   return (
     <>
-      <VideoPlayer url={video.url_primary} time={video.time} />
+      <VideoPlayer url={url} time={time} />
       <h1>{video.title}</h1>
       <Container>
         <Row>
@@ -87,7 +94,40 @@ export default function VideoPage({ videoId, setVideoId }) {
               </Stack>
             </div>
           </Col>
-          <Col>{""}</Col>
+          <Col>
+            {video.chapters && (
+              <Card>
+                <Card.Body>
+                  <Card.Title>Chapters</Card.Title>
+                  <Table striped hover size="sm">
+                    <tbody>
+                      {video.chapters.map((chapter) => (
+                        <tr
+                          onClick={() => setTime(chapter.time)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <td>{timeFormatter(chapter.time)}</td>
+                          <td>{chapter.title}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Card.Body>
+              </Card>
+            )}
+            <div className="d-grid gap-2">
+              {video.url_backup && (
+                <Button
+                  onClick={toggleBackup}
+                  size="sm"
+                  className="mt-2"
+                  variant="outline-primary"
+                >
+                  Switch to {version === "Primary" ? "Backup" : "Primary"} Video
+                </Button>
+              )}
+            </div>
+          </Col>
         </Row>
       </Container>
     </>

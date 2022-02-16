@@ -42,7 +42,6 @@ function App() {
                 <VideoList setVideoId={setVideoId} />
               ) : (
                 <div>
-                  <p>a video goes here</p>
                   <button onClick={() => setVideoId(null)}>back</button>
                   <VideoPageSPA videoId={videoId} setVideoId={setVideoId} />
                 </div>
