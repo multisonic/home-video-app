@@ -1,11 +1,11 @@
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { Card, Stack } from "react-bootstrap";
-import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
-import { fetchVideos } from "../supabaseClient";
 import useVideos from "../hooks/useVideos";
 
 export default function VideoList({ setVideoId }) {
   const { status, data, error, isFetching } = useVideos();
+  dayjs.extend(relativeTime);
 
   if (status === "loading") return "Loading...";
   if (status === "error") return "An error has occurred: " + error.message;
@@ -22,8 +22,10 @@ export default function VideoList({ setVideoId }) {
                 <a onClick={() => setVideoId(video.id)} href="#">
                   {video.title}
                 </a>
-                {/* <Link to={`/videos/${video.slug}`}>{video.title}</Link> (
-                <Link to={`/videos/${video.slug}/edit`}>Edit</Link>) */}
+                <span className="text-muted">
+                  {"   "}
+                  {dayjs(video.date_post).fromNow()}
+                </span>
               </li>
             ))}
           </ul>
