@@ -21,22 +21,7 @@ export default function VideoPlayer({ url, time }) {
   return (
     <>
       <div className="darkmode-ignore player-wrapper mb-3 bg-secondary bg-gradient">
-        {!url ? (
-          <div className="bg-primary">
-            <img src="/video-placeholder.jpg" alt="loading" />
-          </div>
-        ) : (
-          <ReactPlayer
-            ref={playerRef}
-            controls
-            url={url}
-            playing={playing}
-            className="react-player"
-            height="100%"
-            width="100%"
-          />
-        )}
-        {/* <ReactPlayer
+        <ReactPlayer
           ref={playerRef}
           controls
           url={url}
@@ -44,7 +29,7 @@ export default function VideoPlayer({ url, time }) {
           className="react-player"
           height="100%"
           width="100%"
-        /> */}
+        />
       </div>
     </>
   );
