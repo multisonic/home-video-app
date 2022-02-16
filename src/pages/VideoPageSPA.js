@@ -13,7 +13,7 @@ import useVideo from "../hooks/useVideo";
 import { timeFormatter } from "../utils";
 import "./VideoPage.css";
 
-export default function VideoPage({ videoId, setVideoId }) {
+export default function VideoPage({ videoId, setVideoId, setTitle }) {
   const { status, data: video, error, isFetching } = useVideo(videoId);
   console.log(video);
   // const [video, setVideo] = useState([]);
@@ -37,6 +37,7 @@ export default function VideoPage({ videoId, setVideoId }) {
     if (video) {
       setTime(video.start_time);
       setUrl(video.url_primary);
+      setTitle(`${video.title} | The Home Video App`);
     }
   }, [video]);
 
