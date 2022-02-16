@@ -20,7 +20,7 @@ export default function VideoPlayer({ url, time }) {
 
   return (
     <>
-      <div className="darkmode-ignore player-wrapper mb-3">
+      <div className="darkmode-ignore player-wrapper mb-3 bg-secondary bg-gradient">
         <ReactPlayer
           ref={playerRef}
           controls
