@@ -55,7 +55,8 @@ export default function VideoPage() {
 
   return (
     <>
-      {url && <VideoPlayer url={url} time={time} />}
+      {/* {url && <VideoPlayer url={url} time={time} />} */}
+      <VideoPlayer url={url} time={time} />
       <h1>{video.title}</h1>
       {/* <hr /> */}
       <Container>
