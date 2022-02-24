@@ -10,35 +10,18 @@ import {
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
+import useVideo from "../hooks/useVideo";
 import { fetchVideoBySlug } from "../supabaseClient";
 import { timeFormatter } from "../utils";
 import "./VideoPage.css";
 
 export default function VideoPage() {
   let params = useParams();
-  const [video, setVideo] = useState([]);
+  const { status, data: video, error, isFetching } = useVideo(params.slug);
+  console.log(video);
   const [url, setUrl] = useState(null);
   const [version, setVersion] = useState("Primary");
-  const [time, setTime] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [chapters, setChapters] = useState([]);
-
-  async function getVideo(slug) {
-    setLoading(true);
-    let videoData = await fetchVideoBySlug(slug);
-    setVideo(videoData);
-    setChapters(videoData.chapters);
-    setUrl(videoData.url_primary);
-    setTime(videoData.start_time);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    getVideo(params.slug);
-    console.log(video);
-    setLoading(false);
-  }, []);
+  const [time, setTime] = useState(null);
 
   function toggleBackup() {
     if (version === "Primary") {
@@ -48,10 +31,18 @@ export default function VideoPage() {
       setUrl(video.url_primary);
       setVersion("Primary");
     }
-    // jumpToTime(video.startTime);
   }
 
-  if (loading) return "Loading...";
+  useEffect(() => {
+    if (video) {
+      setTime(video.start_time);
+      setUrl(video.url_primary);
+      // setTitle(`${video.title} | The Home Video App`);
+    }
+  }, [video]);
+
+  if (status === "loading") return "Loading...";
+  if (status === "error") return `Error: ${error.message}`;
 
   return (
     <>
