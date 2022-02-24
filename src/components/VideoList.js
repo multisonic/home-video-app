@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Card, Stack } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import useVideos from "../hooks/useVideos";
 
 export default function VideoList({ setVideoId }) {
@@ -19,9 +20,7 @@ export default function VideoList({ setVideoId }) {
           <ul>
             {data.map((video) => (
               <li key={video.id}>
-                <a onClick={() => setVideoId(video.id)} href="#">
-                  {video.title}
-                </a>
+                <Link to={`videos/${video.slug}`}>{video.title}</Link>
                 <span className="text-muted">
                   {"   "}
                   {dayjs(video.date_post).fromNow()}
