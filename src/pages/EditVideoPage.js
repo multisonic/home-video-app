@@ -46,9 +46,15 @@ export default function EditVideoPage() {
 
   return (
     <>
-      {/* <VideoPlayer url={url} time={time} /> */}
       <h1>EDIT {video.title}</h1>
       {/* <hr /> */}
+      <div style={{ maxWidth: "500px" }}>
+        <VideoPlayer
+          url={video.url_primary}
+          time={video.start_time}
+          autoplay={false}
+        />
+      </div>
       <Form>
         <Form.Group className="mb-3" controlId="videoEditForm.Title">
           <Form.Label>Video Title</Form.Label>
