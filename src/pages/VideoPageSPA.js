@@ -16,11 +16,9 @@ import "./VideoPage.css";
 export default function VideoPage({ videoId, setVideoId, setTitle }) {
   const { status, data: video, error, isFetching } = useVideo(videoId);
   console.log(video);
-  // const [video, setVideo] = useState([]);
   const [url, setUrl] = useState(null);
   const [version, setVersion] = useState("Primary");
   const [time, setTime] = useState(null);
-  // const [chapters, setChapters] = useState([]);
 
   function toggleBackup() {
     if (version === "Primary") {
@@ -30,7 +28,6 @@ export default function VideoPage({ videoId, setVideoId, setTitle }) {
       setUrl(video.url_primary);
       setVersion("Primary");
     }
-    // jumpToTime(video.startTime);
   }
 
   useEffect(() => {
@@ -48,6 +45,14 @@ export default function VideoPage({ videoId, setVideoId, setTitle }) {
     <>
       <VideoPlayer url={url} time={time} />
       <h1>{video.title}</h1>
+      <button
+        onClick={() => {
+          setVideoId(null);
+          setTitle("The Home Video App");
+        }}
+      >
+        back
+      </button>
       <Container>
         <Row>
           <Col xxl={9} xl={8} lg={8} md={7}>
@@ -97,24 +102,7 @@ export default function VideoPage({ videoId, setVideoId, setTitle }) {
           </Col>
           <Col>
             {video.chapters && (
-              <Card>
-                <Card.Body>
-                  <Card.Title>Chapters</Card.Title>
-                  <Table striped hover size="sm">
-                    <tbody>
-                      {video.chapters.map((chapter) => (
-                        <tr
-                          onClick={() => setTime(chapter.time)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <td>{timeFormatter(chapter.time)}</td>
-                          <td>{chapter.title}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Card.Body>
-              </Card>
+              <VideoChapters chapters={video.chapters} setTime={setTime} />
             )}
             <div className="d-grid gap-2">
               {video.url_backup && (
@@ -135,6 +123,25 @@ export default function VideoPage({ videoId, setVideoId, setTitle }) {
   );
 }
 
-export function VideoChapters({ chapters }) {
-  return <div></div>;
+export function VideoChapters({ chapters, setTime }) {
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>Chapters</Card.Title>
+        <Table striped hover size="sm">
+          <tbody>
+            {chapters?.map((chapter) => (
+              <tr
+                onClick={() => setTime(chapter.time)}
+                style={{ cursor: "pointer" }}
+              >
+                <td>{timeFormatter(chapter.time)}</td>
+                <td>{chapter.title}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card.Body>
+    </Card>
+  );
 }

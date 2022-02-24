@@ -29,12 +29,12 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="container" style={{ padding: "50px 0 100px 0" }}>
+      <div className="container" style={{ padding: "10px 0 100px 0" }}>
         {!session ? (
           <Auth />
         ) : (
           <>
-            <Header />
+            <Header setVideoId={setVideoId} />
             <Container className="my-2 d-flex flex-column">
               {/* <div>
                 {" "}
@@ -48,14 +48,6 @@ function App() {
                 <VideoList setVideoId={setVideoId} />
               ) : (
                 <div>
-                  <button
-                    onClick={() => {
-                      setVideoId(null);
-                      setTitle("The Home Video App");
-                    }}
-                  >
-                    back
-                  </button>
                   <VideoPageSPA
                     videoId={videoId}
                     setVideoId={setVideoId}

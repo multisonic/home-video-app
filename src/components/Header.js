@@ -2,27 +2,16 @@ import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { supabase } from "../supabaseClient";
 
-export default function Header() {
+export default function Header({ setVideoId }) {
   return (
-    <Navbar collapseOnSelect expand="md" className="pt-0">
-      <Container>
-        <Navbar.Brand href="/">The Home Video App</Navbar.Brand>
+    <Navbar collapseOnSelect expand="md" className="pt-0 mt-0">
+      <Container className="mt-0">
+        <Navbar.Brand href="#" onClick={() => setVideoId(null)}>
+          The Home Video App
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            {/* <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
             <Nav.Link href="#" onClick={() => supabase.auth.signOut()}>
               Sign Out
             </Nav.Link>
