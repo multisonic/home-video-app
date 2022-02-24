@@ -1,53 +1,27 @@
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-  Stack,
-  Table,
-} from "react-bootstrap";
+import { Col, Container, Form, Row, Stack } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
-import { fetchVideoBySlug } from "../supabaseClient";
-import { timeFormatter } from "../utils";
+import useVideo from "../hooks/useVideo";
 import "./VideoPage.css";
 
 export default function EditVideoPage() {
   let params = useParams();
-  const [video, setVideo] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [chapters, setChapters] = useState([]);
-
-  async function getVideo(slug) {
-    setLoading(true);
-    let videoData = await fetchVideoBySlug(slug);
-    setVideo(videoData);
-    setChapters(videoData.chapters);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    getVideo(params.slug);
-    setLoading(false);
-  }, []);
+  const { status, data: video, error, isFetching } = useVideo(params.slug);
 
   useEffect(() => {
     document.title = "Edit Page | The Home Video App";
     if (video) {
       document.title = `Edit ${video.title} | The Home Video App`;
     }
-  });
+  }, [video]);
 
-  if (loading) return "Loading...";
+  if (status === "loading") return "Loading...";
+  if (status === "error") return `Error: ${error.message}`;
 
   return (
     <>
       <h1>EDIT {video.title}</h1>
-      {/* <hr /> */}
       <div style={{ maxWidth: "500px" }}>
         <VideoPlayer
           url={video.url_primary}
