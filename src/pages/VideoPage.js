@@ -10,35 +10,17 @@ import {
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
-import { fetchVideoBySlug } from "../supabaseClient";
+import useVideo from "../hooks/useVideo";
 import { timeFormatter } from "../utils";
 import "./VideoPage.css";
 
 export default function VideoPage() {
   let params = useParams();
-  const [video, setVideo] = useState([]);
+  const { status, data: video, error, isFetching } = useVideo(params.slug);
+  console.log(video);
   const [url, setUrl] = useState(null);
   const [version, setVersion] = useState("Primary");
-  const [time, setTime] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [chapters, setChapters] = useState([]);
-
-  async function getVideo(slug) {
-    setLoading(true);
-    let videoData = await fetchVideoBySlug(slug);
-    setVideo(videoData);
-    setChapters(videoData.chapters);
-    setUrl(videoData.url_primary);
-    setTime(videoData.start_time);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    getVideo(params.slug);
-    console.log(video);
-    setLoading(false);
-  }, []);
+  const [time, setTime] = useState(null);
 
   function toggleBackup() {
     if (version === "Primary") {
@@ -48,17 +30,24 @@ export default function VideoPage() {
       setUrl(video.url_primary);
       setVersion("Primary");
     }
-    // jumpToTime(video.startTime);
   }
 
-  if (loading) return "Loading...";
+  useEffect(() => {
+    document.title = "The Home Video App";
+    if (video) {
+      setTime(video.start_time);
+      setUrl(video.url_primary);
+      document.title = `${video.title} | The Home Video App`;
+    }
+  }, [video]);
+
+  if (status === "loading") return "Loading...";
+  if (status === "error") return `Error: ${error.message}`;
 
   return (
     <>
-      {/* {url && <VideoPlayer url={url} time={time} />} */}
       <VideoPlayer url={url} time={time} />
       <h1>{video.title}</h1>
-      {/* <hr /> */}
       <Container>
         <Row>
           <Col xxl={9} xl={8} lg={8} md={7}>
@@ -102,21 +91,7 @@ export default function VideoPage() {
           </Col>
           <Col>
             {video.chapters && (
-              <Card>
-                <Card.Body>
-                  <Card.Title>Chapters</Card.Title>
-                  <Table striped size="sm">
-                    <tbody>
-                      {chapters.map((chapter) => (
-                        <tr onClick={() => setTime(chapter.time)}>
-                          <td>{timeFormatter(chapter.time)}</td>
-                          <td>{chapter.title}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Card.Body>
-              </Card>
+              <VideoChapters chapters={video.chapters} setTime={setTime} />
             )}
             <div className="d-grid gap-2">
               {video.url_backup && (
@@ -156,6 +131,28 @@ export default function VideoPage() {
   );
 }
 
-export function VideoChapters({ chapters }) {
-  return <div></div>;
+export function VideoChapters({ chapters, setTime }) {
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>Chapters</Card.Title>
+        <Table striped hover size="sm">
+          <tbody>
+            {chapters?.map((chapter) => (
+              <VideoChapterRow chapter={chapter} setTime={setTime} />
+            ))}
+          </tbody>
+        </Table>
+      </Card.Body>
+    </Card>
+  );
+}
+
+export function VideoChapterRow({ chapter, setTime }) {
+  return (
+    <tr onClick={() => setTime(chapter.time)} style={{ cursor: "pointer" }}>
+      <td>{timeFormatter(chapter.time)}</td>
+      <td>{chapter.title}</td>
+    </tr>
+  );
 }

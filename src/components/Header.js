@@ -1,13 +1,16 @@
 import React from "react";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 
-export default function Header({ setVideoId }) {
+export default function Header() {
   return (
     <Navbar collapseOnSelect expand="md" className="pt-0 mt-0">
       <Container className="mt-0">
-        <Navbar.Brand href="#" onClick={() => setVideoId(null)}>
-          The Home Video App
+        <Navbar.Brand>
+          <Link style={{ color: "black", textDecoration: "none" }} to="/">
+            The Home Video App
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

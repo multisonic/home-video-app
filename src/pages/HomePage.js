@@ -1,11 +1,11 @@
 import React from "react";
-import VideoListCard from "../components/VideoListCard";
+import VideoList from "../components/VideoList";
 
 export default function HomePage() {
   return (
     <div>
       <h1>HomePage</h1>
-      <VideoListCard type="all" />
+      <VideoList type="all" />
     </div>
   );
 }
