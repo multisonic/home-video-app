@@ -102,21 +102,7 @@ export default function VideoPage() {
           </Col>
           <Col>
             {video.chapters && (
-              <Card>
-                <Card.Body>
-                  <Card.Title>Chapters</Card.Title>
-                  <Table striped size="sm">
-                    <tbody>
-                      {chapters.map((chapter) => (
-                        <tr onClick={() => setTime(chapter.time)}>
-                          <td>{timeFormatter(chapter.time)}</td>
-                          <td>{chapter.title}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Card.Body>
-              </Card>
+              <VideoChapters chapters={video.chapters} setTime={setTime} />
             )}
             <div className="d-grid gap-2">
               {video.url_backup && (
@@ -156,6 +142,28 @@ export default function VideoPage() {
   );
 }
 
-export function VideoChapters({ chapters }) {
-  return <div></div>;
+export function VideoChapters({ chapters, setTime }) {
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>Chapters</Card.Title>
+        <Table striped hover size="sm">
+          <tbody>
+            {chapters?.map((chapter) => (
+              <VideoChapterRow chapter={chapter} setTime={setTime} />
+            ))}
+          </tbody>
+        </Table>
+      </Card.Body>
+    </Card>
+  );
+}
+
+export function VideoChapterRow({ chapter, setTime }) {
+  return (
+    <tr onClick={() => setTime(chapter.time)} style={{ cursor: "pointer" }}>
+      <td>{timeFormatter(chapter.time)}</td>
+      <td>{chapter.title}</td>
+    </tr>
+  );
 }
