@@ -35,6 +35,13 @@ export default function EditVideoPage() {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    document.title = "Edit Page | The Home Video App";
+    if (video) {
+      document.title = `Edit ${video.title} | The Home Video App`;
+    }
+  });
+
   if (loading) return "Loading...";
 
   return (

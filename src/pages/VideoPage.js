@@ -11,7 +11,6 @@ import {
 import { Link, useParams } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import useVideo from "../hooks/useVideo";
-import { fetchVideoBySlug } from "../supabaseClient";
 import { timeFormatter } from "../utils";
 import "./VideoPage.css";
 
@@ -34,10 +33,11 @@ export default function VideoPage() {
   }
 
   useEffect(() => {
+    document.title = "The Home Video App";
     if (video) {
       setTime(video.start_time);
       setUrl(video.url_primary);
-      // setTitle(`${video.title} | The Home Video App`);
+      document.title = `${video.title} | The Home Video App`;
     }
   }, [video]);
 
@@ -46,10 +46,8 @@ export default function VideoPage() {
 
   return (
     <>
-      {/* {url && <VideoPlayer url={url} time={time} />} */}
       <VideoPlayer url={url} time={time} />
       <h1>{video.title}</h1>
-      {/* <hr /> */}
       <Container>
         <Row>
           <Col xxl={9} xl={8} lg={8} md={7}>

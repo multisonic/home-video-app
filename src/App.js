@@ -17,7 +17,6 @@ const queryClient = new QueryClient();
 
 function App() {
   const [session, setSession] = useState(null);
-  const [title, setTitle] = useState("The Home Video App");
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -26,10 +25,7 @@ function App() {
     });
   }, [session]);
 
-  useEffect(() => {
-    // This will run when the page first loads and whenever the title changes
-    document.title = title;
-  }, [title]);
+  document.title = "The Home Video App";
 
   return (
     <QueryClientProvider client={queryClient}>
