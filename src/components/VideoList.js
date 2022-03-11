@@ -4,8 +4,8 @@ import { Card, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useVideos from "../hooks/useVideos";
 
-export default function VideoList({ setVideoId }) {
-  const { status, data, error, isFetching } = useVideos();
+export default function VideoList({ type = "all", sort = "post" }) {
+  const { status, data, error, isFetching } = useVideos(type, sort);
   dayjs.extend(relativeTime);
 
   if (status === "loading") return "Loading...";

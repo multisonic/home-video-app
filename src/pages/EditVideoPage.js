@@ -38,6 +38,24 @@ export default function EditVideoPage() {
           <Form.Label>Video Description</Form.Label>
           <Form.Control as="textarea" rows={9} value={video.description} />
         </Form.Group>
+        <Form.Group className="mb-3" controlId="videoEditForm.UrlPrimary">
+          <Form.Label>Primary URL</Form.Label>
+          <Form.Control type="text" value={video.url_primary} />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="videoEditForm.UrlBackup">
+          <Form.Label>Backup URL</Form.Label>
+          <Form.Control type="text" value={video.url_backup} />
+        </Form.Group>
+        <div className="d-flex space-between">
+          <Form.Group className="mb-3" controlId="videoEditForm.StartTime">
+            <Form.Label>Start Time</Form.Label>
+            <Form.Control type="number" value={video.url_backup} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="videoEditForm.StartTime">
+            <Form.Label>Start Time</Form.Label>
+            <Form.Control type="number" value={video.url_backup} />
+          </Form.Group>
+        </div>
       </Form>
       <Container>
         <Row>
@@ -58,7 +76,7 @@ export default function EditVideoPage() {
               <p styles={{ whiteSpace: "pre-wrap" }}>
                 {video.description
                   ? video.description
-                  : "This video has no description, so here is some LOREM TEXT. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit optio repellendus deserunt inventore, ratione temporibus voluptatem ullam repellat. Id, libero animi? Perspiciatis, nulla numquam. Aspernatur est alias esse iusto doloribus! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus, libero natus quae minima quidem veritatis impedit ullam nobis fugit reprehenderit. Corporis, ipsum? Pariatur debitis id repellat nisi expedita beatae qui."}
+                  : "This video has no description."}
               </p>
             </div>
             <div className="mb-3">
